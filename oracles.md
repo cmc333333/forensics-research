@@ -76,7 +76,38 @@ return the offsets. We can apply the same type of thinking for regular
 expressions.
 ```haskell
 String -> [Byte] -> [Int]
-RegExp -> [Byte] -> Maybe RegExResult
+RegExp -> [Byte] -> [(Int, RegExpResult)]
 ```
 
 ##  ZIP
+
+### Existence
+Look for the file marker of a zip file (i.e. the central directory record) and
+work back to determine the total size of the archive. Provide the offsets if
+archive(s) are present.
+```haskell
+[Byte] -> [(Int, Int)]
+```
+
+### Contains File
+Scan through file headers to see if any match the queries string. If so,
+return the file header's offset. Similar logic can be applied to Regular
+Expression searches.
+```haskell
+String -> [Byte] -> [Int]
+RegExp -> [Byte] -> [(Int, RegExpResult)]
+```
+
+### Contains Encrypted File
+Scan through the file headers to see if any were encrypted. If so, return the
+file header's offset.
+```haskell
+[Byte] -> [Int]
+```
+
+### Contains Large or Small Files
+Scan through the file headers to check if the archive contains files larger
+than a given size (or smaller). Return offsets as proof.
+```haskell
+Int -> [Byte] -> [Int]
+```
