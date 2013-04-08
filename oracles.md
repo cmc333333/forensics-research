@@ -74,6 +74,7 @@ searching for an exact match, we could search for a regular expression.
 ```haskell
 String -> String -> [Byte] -> [(Int, Int)]
 String -> RegExp -> [Byte] -> [(Int, RegExpResult)]
+```
 
 ##  ZIP
 
