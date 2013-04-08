@@ -42,6 +42,14 @@ present, provide a list of these pairs.
 [Byte] -> [(Int, Int)]
 ```
 
+### Subimages
+Look for any thumbnails (or other additional images)within the image data. If
+present, provide the associated offsets for the sub images' start end end
+markers.
+```haskell
+[Byte] -> [(Int, Int)]
+```
+
 ### String Match
 JPEG formats (particularly Exif) contain optional meta data, often including
 arbitrary strings. It would be useful, then to look within the designated
@@ -81,7 +89,16 @@ file header's offset.
 
 ### Contains Large or Small Files
 Scan through the file headers to check if the archive contains files larger
-than a given size (or smaller). Return offsets as proof.
+than a given size (or smaller). Return offsets of file header and associated
+file size as proof.
 ```haskell
-Int -> [Byte] -> [Int]
+Int -> [Byte] -> [(Int, Int)]
+```
+
+### Files Modified After/Before
+Scan through the file headers to check if the archive contains files which
+were last modified before/after some time. Returns offsets of the file header
+and the associated file modification offset as proof.
+```haskell
+Date -> [Byte] -> [(Int, Int)]
 ```
