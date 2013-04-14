@@ -21,35 +21,28 @@ Definition jpeg_start_end_tags (img: list nat) (offset_start offset_end: nat): S
     (ble_nat offset_start offset_end)) = true} +
   {False}.
 
-Definition jpeg_start_end_pairs (disk: list nat) (offsets: list (prod nat nat)): Set :=
-  {
-    forall (start_end: prod nat nat) (p: (existsb (beq start_end) offsets) = true),
-      (andb
-        (is_jpeg_start_tag disk (fst pair)) (is_jpeg_end_tag disk (snd pair))
-        (ble_nat (fst pair) (snd pair))
-      ) = true
-  } + { False }.
+Definition jpeg_start_end_pair (disk: list nat) (start_end: nat*nat): bool :=
+  andb 
+    (andb (is_jpeg_start_tag disk (fst start_end)) (is_jpeg_end_tag disk (snd start_end))) 
+    (ble_nat (fst start_end) (snd start_end)). 
 
-Definition all_jpegs (disk: list nat) (offsets: list (prod nat nat)): Set :=
+Definition jpeg_start_end_pairs (disk: list nat) (offsets: list (nat*nat)): bool :=
+  forallb (jpeg_start_end_pair disk) offsets.
+
+Definition all_jpegs (disk: list nat) (offsets: list (nat*nat)): Set :=
   {
-    forall (offset: nat) (offset < length disk),
-      (andb
+    forall (offset: nat) (limit: offset < length disk),
+      (andb 
         (orb 
           (negb (is_jpeg_start_tag disk offset))
           (existsb (map fst offsets) beq_nat offset)
+          (* not followed by an end *)
         )
         (orb 
           (negb (is_jpeg_end_tag disk offset))
           (existsb (map snd offsets) beq_nat offset)
+          (* not preceeded by a start *)
         )
       ) 
+
   } + { False }.
-
-Definition jpegs_oracle (disk: list nat) (offsets: list (prod nat nat)): Set :=
-  {
-    (and jpeg_start_end_pairs disk offsets
-      )
-      (forall (offset: nat) (offset < length disk),
-        (orb (negb (is_jpeg_start_tag disk
-
-  } + { False }       
