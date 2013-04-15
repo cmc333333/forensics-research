@@ -54,3 +54,16 @@ Definition only_jpeg (disk: list nat) (offset_start offset_end: nat): Set :=
         )
       ) = true)
   } + { False }.
+
+Definition subimage (disk: list nat) (offset_start offset_end subimage_end: nat): Set :=
+  {and
+    ((andb 
+      (jpeg_start_end_tags disk offset_start offset_end)
+      (jpeg_start_end_tags disk (offset_end + 2) subimage_end)
+    ) = true)
+    (only_jpeg (skipn (offset_end + 2) disk) 1 (subimage_end - offset_end - 2))
+  } + { False }.
+
+Definition exif_match (disk: list nat) (tag value: list nat): Set :=
+  { True
+  } + { False }.
