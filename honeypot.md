@@ -132,3 +132,30 @@ Find deleted archives (as described above)
 ###  Check Owners/Groups Exist
 
 
+## An Evidence-based Perspective
+
+### Finding Malicious Files - Proof of Existence
+Give a Forensics person a disk image, they come back with a set of malicious
+files and evidence for those files' existence.
+
+What form does that evidence take? (@todo: Evidence that files are malicious)
+
+#### Matt Borland
+1. Proof that the provided files *were* deleted
+  1. ```Disk -> List[DeletedINode]``` -- "deleted"
+  2. ```List[DeletedINodes] -> List[DeletedFiles]``` -- "inode2File"
+  3. ```List[DeletedFiles] -> List[DeletedArchiveFiles] ``` -- "isZip?"
+  4. ```List[DeletedArchiveFiles] -> List[DeletedFiles]``` -- "unzip"
+2. Proof that the provided files are potentially malicious
+  1. ```List[Files]->List[LookLikeSystemFiles]``` -- "systemFile?"
+
+#### Marlon Jabbur
+1. Proof that the provided files were deleted (see Borland)
+2. Proof that the provided files replaced system files
+
+#### Jason Lee
+1. Proof that the provided files were on disk
+2. Proof that the provided files are malicious
+
+### Proof of No Malicious Files (@todo)
+What if nothing was found? How could we provide evidence of this?
