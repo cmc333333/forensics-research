@@ -1,5 +1,46 @@
 # Honeypot Recovery Tools/Actions
 
+## An Evidence-based Perspective
+
+### Finding Malicious Files - Proof of Existence
+Give a Forensics person a disk image, they come back with a set of malicious
+files and evidence for those files' existence.
+
+What form does that evidence take? (@todo: Evidence that files are malicious)
+
+#### Matt Borland
+1. Proof that the provided files *were* deleted
+  1. ```Disk -> List[DeletedINode]``` -- "deleted"
+  2. ```List[DeletedINodes] -> List[DeletedFiles]``` -- "inode2File"
+  3. ```List[DeletedFiles] -> List[DeletedArchiveFiles] ``` -- "isZip?"
+  4. ```List[DeletedArchiveFiles] -> List[DeletedFiles]``` -- "unzip"
+2. Proof that the provided files are potentially malicious
+  1. ```List[Files]->List[LookLikeSystemFiles]``` -- "systemFile?"
+
+#### Marlon Jabbur
+1. Proof that the provided files were deleted (see Borland)
+2. Proof that the provided files replaced system files
+
+#### Jason Lee
+1. Proof that the provided files were on disk
+2. Proof that the provided files are malicious
+
+### Proof of No Malicious Files (@todo)
+What if nothing was found? How could we provide evidence of this?
+
+### Constructing A Timeline
+You give a foresics technician a disk and they come back with a history of events and proof that those events took place.
+
+What form does that proof take?
+
+#### Matt Borland
+1. Proof that provided history is accurate for deleted files.
+2. Proof that the provided history is accurate for system files.
+
+#### Jason Lee
+1. Proof that provided history is accurate for suspicious files.
+2. Proof that provided history is accurate fro system files.
+
 ## Types
 
 * Block = list[byte]
@@ -130,32 +171,3 @@ Find deleted archives (as described above)
 ```Disk x String -> List[Offsets]```
 
 ###  Check Owners/Groups Exist
-
-
-## An Evidence-based Perspective
-
-### Finding Malicious Files - Proof of Existence
-Give a Forensics person a disk image, they come back with a set of malicious
-files and evidence for those files' existence.
-
-What form does that evidence take? (@todo: Evidence that files are malicious)
-
-#### Matt Borland
-1. Proof that the provided files *were* deleted
-  1. ```Disk -> List[DeletedINode]``` -- "deleted"
-  2. ```List[DeletedINodes] -> List[DeletedFiles]``` -- "inode2File"
-  3. ```List[DeletedFiles] -> List[DeletedArchiveFiles] ``` -- "isZip?"
-  4. ```List[DeletedArchiveFiles] -> List[DeletedFiles]``` -- "unzip"
-2. Proof that the provided files are potentially malicious
-  1. ```List[Files]->List[LookLikeSystemFiles]``` -- "systemFile?"
-
-#### Marlon Jabbur
-1. Proof that the provided files were deleted (see Borland)
-2. Proof that the provided files replaced system files
-
-#### Jason Lee
-1. Proof that the provided files were on disk
-2. Proof that the provided files are malicious
-
-### Proof of No Malicious Files (@todo)
-What if nothing was found? How could we provide evidence of this?
