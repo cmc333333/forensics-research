@@ -6,20 +6,25 @@
 Give a Forensics person a disk image, they come back with a set of malicious
 files and evidence for those files' existence.
 
-What form does that evidence take? (@todo: Evidence that files are malicious)
+What form does that evidence take?
 
 #### Matt Borland
 1. Proof that the provided files *were* deleted
-  1. ```Disk -> List[DeletedINode]``` -- "deleted"
-  2. ```List[DeletedINodes] -> List[DeletedFiles]``` -- "inode2File"
-  3. ```List[DeletedFiles] -> List[DeletedArchiveFiles] ``` -- "isZip?"
-  4. ```List[DeletedArchiveFiles] -> List[DeletedFiles]``` -- "unzip"
+  1. Disk -> List[INode] ^ All INodes in the list were deleted from the disk
+  2. (1) -> List[File] ^ All Files in the list were deleted from the disk
+  3. (2) -> List[Archives] ^ All Archives in the list were deleted from the disk
+  4. (3) -> List[File] ^ All Files were part of a deleted archive on the disk
 2. Proof that the provided files are potentially malicious
-  1. ```List[Files]->List[LookLikeSystemFiles]``` -- "systemFile?"
+  1. List[Files] -> List[Files] ^ All Files in the list "look like" system files
 
 #### Marlon Jabbur
 1. Proof that the provided files were deleted (see Borland)
 2. Proof that the provided files replaced system files
+  1. Disk -> List[File] ^ All files in the list were in the disk
+  2. (1) -> List[File] ^ All files in the list "look like" system files (in the disk)
+  3. (2) -> List[Fingerprint] ^ All finger prints are of system-looking files
+  4. List[File] ^ All files in list were deleted from disk -> List[Fingerprint] ^ All finger prints are of deleted files
+  5. (3) -> (4) -> List[Fingerprint] ^ All finger prints in the list are of both system files and deleted files
 
 #### Jason Lee
 1. Proof that the provided files were on disk
@@ -40,6 +45,10 @@ What form does that proof take?
 #### Jason Lee
 1. Proof that provided history is accurate for suspicious files.
 2. Proof that provided history is accurate fro system files.
+
+---
+OLD
+---
 
 ## Types
 
