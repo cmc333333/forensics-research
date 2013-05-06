@@ -28,7 +28,11 @@ What form does that evidence take?
 
 #### Jason Lee
 1. Proof that the provided files were on disk
+  1. Disk -> List[File] ^ All files in the list were in the disk
+  2. List[File] -> (1) -> List[File] ^ All files in the list are on the disk and in the provided list
 2. Proof that the provided files are malicious
+  1. List[File] -> List[Fingerprint] ^ All fingerprints in the list are of those in the provided file list
+  2. List[Fingerprint] ^ All fingerprints in the list are malicious -> (!) -> List[Fingerprint] ^ All fingerprints are of malicious files in the provided list
 
 ### Proof of No Malicious Files (@todo)
 What if nothing was found? How could we provide evidence of this?
@@ -40,11 +44,16 @@ What form does that proof take?
 
 #### Matt Borland
 1. Proof that provided history is accurate for deleted files.
-2. Proof that the provided history is accurate for system files.
+  1. Disk -> List[INode] ^ All INodes in the list were deleted from the disk
+  2. (1) -> List[History] ^ All History are for files deleted from the disk
+2. Proof that provided history is accurate for system files.
+  1. Disk -> List[File] ^ All Files in the list are on the disk
+  2. (1) -> List[File] ^ All Files in the list are on the disk and are system files
+  3. (2) -> List[History] ^ All History are for system files on the disk
 
 #### Jason Lee
 1. Proof that provided history is accurate for suspicious files.
-2. Proof that provided history is accurate fro system files.
+2. Proof that provided history is accurate for system files. (See Borland)
 
 ---
 OLD
